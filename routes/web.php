@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\action\CategorysController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -15,11 +16,18 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group( function() {
+    
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::get('/category', [IndexController::class, 'indexCategory'])->middleware(['auth', 'verified'])->name('category');
+    // route Category
+    Route::get('/category', [IndexController::class, 'indexCategory'])->name('category');
+    Route::resource('category', CategorysController::class)->only(['create','store','edit','update', 'destroy'])->names(['category.create', 'category.store', 'category.edit', 'category.update', 'category.destroy']);
+
+});
+
 
 
 Route::middleware('auth')->group(function () {

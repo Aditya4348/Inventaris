@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, usePage } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function Category() {
@@ -24,6 +24,14 @@ export default function Category() {
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                     Kategori
                 </h2>
+            }
+            subHeader={
+                <Link
+                    href={route("category.create")}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                >
+                    Tambah Kategori
+                </Link>
             }
         >
             <Head title="Kategori" />
@@ -102,7 +110,9 @@ export default function Category() {
                                             disabled={!link.url}
                                             onClick={() =>
                                                 link.url &&
-                                                router.get(link.url, {search}, 
+                                                router.get(
+                                                    link.url,
+                                                    { search },
                                                     {
                                                         preserveState: true,
                                                         replace: true,

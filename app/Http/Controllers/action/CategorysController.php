@@ -1,35 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\action;
 
+use App\Http\Controllers\Controller;
 use App\Models\categorys;
-use App\Http\Requests\StorecategorysRequest;
-use App\Http\Requests\UpdatecategorysRequest;
+use Illuminate\Http\Request;
+
 
 class CategorysController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return inertia('actions/category/storeCategory');
     }
+    
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorecategorysRequest $request)
+    public function store(Request $request)
     {
-        //
+        try {
+            $validate = $request->validate([
+                'name' => 'required|unique:categorys|max:255',
+                'description' => 'required',
+            ]);
+
+            categorys::create($validate);
+
+            return redirect()->route('category')->with('success', 'Kategori berhasil disimpan!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Terjadi kesalahan, silakan coba lagi.' . $th->getMessage());
+        }
     }
 
     /**
@@ -51,7 +57,7 @@ class CategorysController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecategorysRequest $request, categorys $categorys)
+    public function update(Request $request, categorys $categorys)
     {
         //
     }
