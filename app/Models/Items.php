@@ -20,7 +20,7 @@ class Items extends Model
     // // satu item satu category
     public function Category()
     {
-        return $this->belongsTo(categorys::class);
+        return $this->belongsTo(Categories::class);
     }
 
 }

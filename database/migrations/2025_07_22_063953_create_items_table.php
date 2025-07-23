@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('qty');
 
             // relations Table
-            $table->foreignId('category_id')->constrained('categorys')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('Categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

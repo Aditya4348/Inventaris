@@ -6,6 +6,12 @@ export default function Category() {
     const { categories } = usePage().props;
     const [search, setSearch] = useState("");
 
+    const handleDelete = (id) => {
+        if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
+            router.delete(route("category.destroy", id));
+        }
+    };
+
     useEffect(() => {
         const timeOut = setTimeout(() => {
             router.get(
@@ -43,11 +49,11 @@ export default function Category() {
                             {/* Header + Search */}
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold">
-                                    Daftar Items
+                                    Daftar Kategori
                                 </h2>
                                 <input
                                     type="text"
-                                    placeholder="Cari item..."
+                                    placeholder="Cari Kategori..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="border border-gray-300 rounded px-4 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -82,10 +88,23 @@ export default function Category() {
                                                         {category.description}
                                                     </td>
                                                     <td className="px-6 py-4 text-sm text-gray-800">
-                                                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                                        <Link
+                                                            href={route(
+                                                                "category.edit",
+                                                                category.id
+                                                            )}
+                                                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                                                        >
                                                             Edit
-                                                        </button>
-                                                        <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm ml-2">
+                                                        </Link>
+                                                        <button
+                                                            onClick={() =>
+                                                                handleDelete(
+                                                                    category.id
+                                                                )
+                                                            }
+                                                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm ml-2"
+                                                        >
                                                             Hapus
                                                         </button>
                                                     </td>

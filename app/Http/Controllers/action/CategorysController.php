@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\action;
 
 use App\Http\Controllers\Controller;
-use App\Models\categorys;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 
@@ -17,7 +17,7 @@ class CategorysController extends Controller
     {
         return inertia('actions/category/storeCategory');
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,35 +38,55 @@ class CategorysController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(categorys $categorys)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(categorys $categorys)
+    public function edit($id)
     {
-        //
+        $data = Categories::find($id);
+        return inertia('actions/category/updateCategory', [
+            'category' => $data
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, categorys $categorys)
+    public function update(Request $request, String $id)
     {
-        //
+        try {
+            $data = Categories::find($id);
+
+            if(!$data){
+                return back()->with('errors','Data kategori Tidak ditemukan');
+            }
+
+            $data->update($request->all());
+
+            return redirect()->route('category')->with('success', 'Data kategori berhasil diupdate!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(categorys $categorys)
+    public function destroy($id)
     {
-        //
+        try {
+            $data = Categorys::find($id);
+
+            if (!$data) {
+                return redirect()->back()->with('errors', 'Data Category tidak ditemukan');
+            }
+
+            $data->delete();
+
+            return redirect()->route('category')->with('success', 'Data kategori berhasil dihapus!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Terjadi kesalahan, silakan coba lagi.' . $th->getMessage());
+        }
     }
 }

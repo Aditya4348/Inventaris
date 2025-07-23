@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Items;
 use Illuminate\Http\Request;
-use App\Models\Categorys;
+use App\Models\Categories;
 
 class IndexController extends Controller
 {
@@ -17,7 +17,7 @@ class IndexController extends Controller
 
     public function indexCategory(Request $request)
     {
-        $query = Categorys::query();
+        $query = Categories::query();
 
         if ($request->input('search')) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
