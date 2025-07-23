@@ -47,7 +47,7 @@ export default function Category() {
                     <div className="bg-white shadow-md rounded-lg overflow-hidden">
                         <div className="p-6 text-gray-900">
                             {/* Header + Search */}
-                            <div className="flex justify-between items-center mb-6">
+                            <div className="flex md:flex-row flex-col justify-between items-center gap-5 mb-6">
                                 <h2 className="text-2xl font-bold">
                                     Daftar Kategori
                                 </h2>
@@ -87,7 +87,7 @@ export default function Category() {
                                                     <td className="px-6 py-4 text-sm text-gray-800">
                                                         {category.description}
                                                     </td>
-                                                    <td className="px-6 py-4 text-sm text-gray-800">
+                                                    <td className="flex md:flex-row flex-col justify-center items-center gap-5 px-6 py-4 text-sm text-gray-800">
                                                         <Link
                                                             href={route(
                                                                 "category.edit",
