@@ -19,9 +19,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group( function() {
     
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [IndexController::class, 'indexDashboard'])->name('dashboard');
 
     // route Category
     Route::get('/category', [IndexController::class, 'indexCategory'])->name('category');

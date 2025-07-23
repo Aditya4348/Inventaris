@@ -8,6 +8,14 @@ use App\Models\Categories;
 
 class IndexController extends Controller
 {
+
+    public function indexDashboard(){
+        
+        return inertia('Dashboard', [
+            'categories' => Categories::count(),
+            'items' => Items::count(),
+        ]);
+    }
     
 /**
  * Retrieve all categories and return them to the 'index' view using Inertia.

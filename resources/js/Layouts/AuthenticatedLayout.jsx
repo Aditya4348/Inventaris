@@ -1,9 +1,10 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
+import Logo from "@/Components/Logo";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Transition } from "@headlessui/react";
 import { Link, usePage } from "@inertiajs/react";
+import { Package } from "lucide-react";
 import { useState } from "react";
 
 export default function AuthenticatedLayout({ header, subHeader, message, children }) {
@@ -17,10 +18,10 @@ export default function AuthenticatedLayout({ header, subHeader, message, childr
             <nav className="border-b border-gray-100 bg-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
-                        <div className="flex">
+                        <div className="flex gap-10">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <Link href={route("dashboard")} className="flex items-center space-x-1 ">
+                                    <Logo />
                                 </Link>
                             </div>
 
@@ -204,7 +205,7 @@ export default function AuthenticatedLayout({ header, subHeader, message, childr
                 {message && (
                     <div className=" px-4 py-6 sm:px-6 lg:px-8">{message}</div>
                 )}
-                ;
+                
                 {subHeader && (
                     <div className=" px-4 py-6 sm:px-6 lg:px-8">
                         {subHeader}

@@ -104,7 +104,7 @@ const Product = () => {
                                                         {item.name}
                                                     </td>
                                                     <td className="px-6 py-4 text-sm text-gray-800">
-                                                        ${item.price}
+                                                        {Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(item.price)}
                                                     </td>
                                                     <td className="px-6 py-4 text-sm text-gray-800">
                                                         {item.qty}

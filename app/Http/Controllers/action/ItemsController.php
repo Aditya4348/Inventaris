@@ -49,7 +49,8 @@ class ItemsController extends Controller
     {
         $data = Items::find($id);
         return inertia('actions/product/updateProduct', [
-            'items' => $data
+            'items' => $data,
+            'categories' => Categories::all()
         ]);
     }
 
