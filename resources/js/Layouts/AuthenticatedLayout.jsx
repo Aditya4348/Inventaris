@@ -6,7 +6,7 @@ import { Transition } from "@headlessui/react";
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function AuthenticatedLayout({ header, subHeader, children }) {
+export default function AuthenticatedLayout({ header, subHeader, message, children }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -36,6 +36,12 @@ export default function AuthenticatedLayout({ header, subHeader, children }) {
                                     active={route().current("category")}
                                 >
                                     Kategori
+                                </NavLink>
+                                <NavLink
+                                    href={route("product")}
+                                    active={route().current("product")}
+                                >
+                                    Product
                                 </NavLink>
                             </div>
                         </div>
@@ -156,6 +162,12 @@ export default function AuthenticatedLayout({ header, subHeader, children }) {
                             >
                                 Kategori
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("product")}
+                                active={route().current("product")}
+                            >
+                                Product
+                            </ResponsiveNavLink>
                         </div>
 
                         <div className="border-t border-gray-200 pb-1 pt-4">
@@ -185,19 +197,20 @@ export default function AuthenticatedLayout({ header, subHeader, children }) {
                 </Transition>
             </nav>
 
-                <header className="bg-white flex justify-between items-center">
-                    {header && (
-                        <div className=" px-4 py-6 sm:px-6 lg:px-8">
-                            {header}
-                        </div>
-                    )}
-                    {subHeader && (
-                        <div className=" px-4 py-6 sm:px-6 lg:px-8">
-                            {subHeader}
-                        </div>
-                    )}
-
-                </header>
+            <header className="bg-white flex justify-between items-center">
+                {header && (
+                    <div className=" px-4 py-6 sm:px-6 lg:px-8">{header}</div>
+                )}
+                {message && (
+                    <div className=" px-4 py-6 sm:px-6 lg:px-8">{message}</div>
+                )}
+                ;
+                {subHeader && (
+                    <div className=" px-4 py-6 sm:px-6 lg:px-8">
+                        {subHeader}
+                    </div>
+                )}
+            </header>
 
             <main>{children}</main>
         </div>

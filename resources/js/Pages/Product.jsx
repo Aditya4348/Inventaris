@@ -1,22 +1,24 @@
+import Notifikasi from "@/Components/Notifikasi";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
-export default function Category() {
-    const { categories } = usePage().props;
+const Product = () => {
+    const { flash, items } = usePage().props;
+    console.log(flash);
     const [search, setSearch] = useState("");
 
-    // Handle Delete function
+    // hamdle delete function
     const handleDelete = (id) => {
         if (confirm("Apakah anda yakin ingin menghapus data ini?")) {
-            router.delete(route("category.destroy", id));
+            router.delete(route("product.destroy", id));
         }
     };
 
     useEffect(() => {
         const timeOut = setTimeout(() => {
             router.get(
-                route("category"),
+                route("product"),
                 { search: search },
                 { preserveState: true, replace: true }
             );
@@ -28,20 +30,30 @@ export default function Category() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Kategori
+                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                    Daftar Product
                 </h2>
+            }
+            message={
+                <>
+                    {flash?.success && (
+                        <Notifikasi type="success" message={flash.success} />
+                    )}
+                    {flash?.error && (
+                        <Notifikasi type="error" message={flash.error} />
+                    )}
+                </>
             }
             subHeader={
                 <Link
-                    href={route("category.create")}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                    href={route("product.create")}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
-                    Tambah Kategori
+                    Tambah Product
                 </Link>
             }
         >
-            <Head title="Kategori" />
+            <Head title="Daftar Product" />
 
             <div className="py-12 bg-gray-100 min-h-screen">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -50,11 +62,11 @@ export default function Category() {
                             {/* Header + Search */}
                             <div className="flex md:flex-row flex-col justify-between items-center gap-5 mb-6">
                                 <h2 className="text-2xl font-bold">
-                                    Daftar Kategori
+                                    Daftar Product
                                 </h2>
                                 <input
                                     type="text"
-                                    placeholder="Cari Kategori..."
+                                    placeholder="Cari Product..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="border border-gray-300 rounded px-4 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -70,7 +82,13 @@ export default function Category() {
                                                 Nama
                                             </th>
                                             <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                                                Deskripsi
+                                                Harga
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                                                Stock Barang
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
+                                                Kategori
                                             </th>
                                             <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 border-b">
                                                 Action
@@ -79,20 +97,26 @@ export default function Category() {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {/* Ganti dengan loop item */}
-                                        {categories.data.map(
-                                            (category, index) => (
+                                        {items.data.length > 0 ? (
+                                            items.data.map((item, index) => (
                                                 <tr key={index}>
                                                     <td className="px-6 py-4 text-sm text-gray-800">
-                                                        {category.name}
+                                                        {item.name}
                                                     </td>
                                                     <td className="px-6 py-4 text-sm text-gray-800">
-                                                        {category.description}
+                                                        ${item.price}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm text-gray-800">
+                                                        {item.qty}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-sm text-gray-800">
+                                                        {item.category?.name}
                                                     </td>
                                                     <td className="flex md:flex-row flex-col justify-center items-center gap-5 px-6 py-4 text-sm text-gray-800">
                                                         <Link
                                                             href={route(
-                                                                "category.edit",
-                                                                category.id
+                                                                "product.edit",
+                                                                item.id
                                                             )}
                                                             className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
                                                         >
@@ -101,7 +125,7 @@ export default function Category() {
                                                         <button
                                                             onClick={() =>
                                                                 handleDelete(
-                                                                    category.id
+                                                                    item.id
                                                                 )
                                                             }
                                                             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm ml-2"
@@ -110,7 +134,16 @@ export default function Category() {
                                                         </button>
                                                     </td>
                                                 </tr>
-                                            )
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td
+                                                    colSpan="5"
+                                                    className="text-center px-6 py-4 text-sm text-gray-800"
+                                                >
+                                                    Data Kosong
+                                                </td>
+                                            </tr>
                                         )}
                                     </tbody>
                                 </table>
@@ -119,7 +152,7 @@ export default function Category() {
                             {/* Pagination */}
                             <div className="flex justify-between items-center mt-6">
                                 <div className="flex space-x-2">
-                                    {categories.links.map((link, index) => (
+                                    {items.links.map((link, index) => (
                                         <button
                                             key={index}
                                             className={`px-4 py-2 text-sm rounded ${
@@ -152,4 +185,6 @@ export default function Category() {
             </div>
         </AuthenticatedLayout>
     );
-}
+};
+
+export default Product;

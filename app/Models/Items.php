@@ -14,7 +14,7 @@ class Items extends Model
         'name',
         'price',
         'qty',
-        'category',
+        'category_id',
     ];
 
     // // satu item satu category

@@ -30,7 +30,7 @@ class CategorysController extends Controller
                 'description' => 'required',
             ]);
 
-            categorys::create($validate);
+            Categories::create($validate);
 
             return redirect()->route('category')->with('success', 'Kategori berhasil disimpan!');
         } catch (\Throwable $th) {
@@ -76,7 +76,7 @@ class CategorysController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Categorys::find($id);
+            $data = Categories::find($id);
 
             if (!$data) {
                 return redirect()->back()->with('errors', 'Data Category tidak ditemukan');

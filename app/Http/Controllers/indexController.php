@@ -21,7 +21,6 @@ class IndexController extends Controller
 
         if ($request->input('search')) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
-
         }
 
          $categories = $query->paginate(10)->withQueryString();
@@ -32,12 +31,19 @@ class IndexController extends Controller
 
 
 
-    public function indexItems(){
+    public function indexItems(Request $request)
+    {
+        $query = Items::with('Category');
 
-        $Items = Items::with('category')->get();
 
-        return inertia('index', [
-            'Items' => $Items    
+        if ($request->input('search')) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $items = $query->paginate(10)->withQueryString();
+
+        return inertia('Product', [
+            'items' => $items
         ]);
     }
 }

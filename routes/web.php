@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\action\CategorysController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\action\ItemsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,9 @@ Route::middleware(['auth', 'verified'])->group( function() {
     Route::get('/category', [IndexController::class, 'indexCategory'])->name('category');
     Route::resource('category', CategorysController::class)->only(['create','store','edit','update', 'destroy'])->names(['category.create', 'category.store', 'category.edit', 'category.update', 'category.destroy']);
 
+    // Route Product
+    Route::get('/product', [IndexController::class, 'indexItems'])->name('product');
+    Route::resource('product', ItemsController::class)->only(['create','store','edit','update', 'destroy'])->names(['product.create', 'product.store', 'product.edit', 'product.update', 'product.destroy']);
 });
 
 

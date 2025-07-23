@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Categories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ItemsFactory extends Factory
 {
+
+    
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,10 @@ class ItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->word(),
+            'price' => $this->faker->randomFloat(2, 10, 1000),
+            'qty' => $this->faker->numberBetween(1, 100),
+            'category_id' => Categories::factory(),
         ];
     }
 }
