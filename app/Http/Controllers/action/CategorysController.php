@@ -26,7 +26,7 @@ class CategorysController extends Controller
     {
         try {
             $validate = $request->validate([
-                'name' => 'required|unique:categorys|max:255',
+                'name' => 'required|unique:categories|max:255',
                 'description' => 'required',
             ]);
 
